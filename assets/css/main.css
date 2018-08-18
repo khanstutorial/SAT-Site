@@ -2598,7 +2598,7 @@
 
 	table {
 		margin: 0 0 3em 0;
-		width: 100%;
+		width: 80%;
 	}
 
 		table tbody tr {
@@ -3752,3 +3752,23 @@
 			}
 
 		}
+
+
+	/* Announcment Bar */
+
+	#dabar{
+	background: rgb(0, 0, 0);
+	color: #fff;
+	display: block;
+	position: relative;
+	top: 0;
+	width: 100%;
+	padding: 10px 0px;
+	text-align: center;
+}
+
+#dabar a{
+        color: #fff;
+        text-decoration:underline;
+        font-weight: normal;
+}
