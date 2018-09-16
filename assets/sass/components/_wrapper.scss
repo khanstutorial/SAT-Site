@@ -1,5 +1,5 @@
 ///
-/// Construct by Pixelarity
+/// Altitude by Pixelarity
 /// pixelarity.com | hello@pixelarity.com
 /// License: pixelarity.com/license
 ///
@@ -7,58 +7,51 @@
 /* Wrapper */
 
 	.wrapper {
-		@include padding(7.5em, 0);
-		position: relative;
+		width: 100%;
 
 		> .inner {
-			margin: 0 auto;
-			max-width: 72em;
-			width: 100%;
-		}
+			width: 80em;
+			max-width: 100%;
+			margin-left: auto;
+			margin-right: auto;
 
-		&.style1 {
-			@include color(accent1);
-		}
+			> .main {
+				@include padding(6em, 6em);
+				background-color: _palette(bg);
 
-		&.style2 {
-			@include color(accent2);
-		}
-
-		&.alt {
-			> .inner {
-				@include padding(7em, 4em);
-			}
-		}
-
-		@include breakpoint(large) {
-			@include padding(6em, 2em);
-
-			&.alt {
-				> .inner {
-					@include padding(6em, 4em);
+				&.accent1 {
+					@include color(accent1);
 				}
-			}
-		}
 
-		@include breakpoint(medium) {
-			&.alt {
-				> .inner {
-					@include padding(4em, 3em);
+				&.accent2 {
+					@include color(accent2);
 				}
-			}
-		}
 
-		@include breakpoint(small) {
-			@include padding(4em, 2em);
+				&.accent3 {
+					@include color(accent3);
+				}
 
-			&.alt {
-				> .inner {
+				&.accent4 {
+					@include color(accent4);
+				}
+
+				@include breakpoint('<=xlarge') {
+					@include padding(5em, 5em);
+				}
+
+				@include breakpoint('<=small') {
 					@include padding(3em, 2em);
 				}
+
+				@include breakpoint('<=xsmall') {
+					@include padding(3em, 1.5em);
+				}
 			}
 		}
 
-		@include breakpoint(xsmall) {
-			@include padding(3em, 2em);
+		@include breakpoint('<=xlarge') {
+			> .inner {
+				width: 72em;
+			}
 		}
 	}

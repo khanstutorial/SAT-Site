@@ -1,5 +1,5 @@
 ///
-/// Construct by Pixelarity
+/// Altitude by Pixelarity
 /// pixelarity.com | hello@pixelarity.com
 /// License: pixelarity.com/license
 ///
@@ -7,48 +7,144 @@
 /* Footer */
 
 	#footer {
-		@include padding(6em, 2em);
+		@include color-typography(accent1);
+		margin-top: 4em;
+		background-color: transparent;
 		text-align: center;
 
-		.copyright {
-			color: _palette(fg-light);
-			font-size: 0.9em;
-			margin: 0 0 _size(element-margin) 0;
-			padding: 0;
+		a {
+			border-bottom-color: transparent;
+			color: _palette(accent1, fg);
+
+			&:hover {
+				border-bottom-color: inherit;
+			}
+		}
+
+		> :last-child {
+			margin-bottom: 0;
+		}
+
+		.links {
+			@include vendor('display', 'flex');
+			@include vendor('flex-direction', 'row');
+			@include vendor('flex-wrap', 'wrap');
+			margin: 0 0 4em 0;
+
+			> div {
+				@include padding(2em, 0);
+				@include vendor('flex-grow', '0');
+				@include vendor('flex-shrink', '0');
+				border-left: solid 1px _palette(accent1, border);
+				border-top: solid 1px _palette(accent1, border);
+				width: 25%;
+
+				ul {
+					list-style: none;
+					margin-top: _size(element-margin);
+					padding: 0 2em;
+
+					li {
+						margin: 0.75em 0;
+						padding-left: 0;
+					}
+				}
+
+				&:nth-child(4n - 3) {
+					border-left-width: 0;
+				}
+
+				&:nth-child(-n + 4) {
+					border-top-width: 0;
+				}
+			}
+		}
+
+		.contact-icons {
+			display: inline-block;
 
 			li {
-				border-left: solid _size(border-width) _palette(border);
 				display: inline-block;
-				list-style: none;
-				margin-left: 1.5em;
-				padding-left: 1.5em;
+				margin-left: 2em;
+
+				&:before {
+					color: _palette(accent1, fg-bold);
+				}
 
 				&:first-child {
-					border-left: 0;
 					margin-left: 0;
-					padding-left: 0;
 				}
 			}
 		}
 
-		@include breakpoint(small) {
-			@include padding(4em, 2em);
+		.copyright {
+			color: _palette(accent1, fg-light);
+		}
 
-			.icons {
-				margin-bottom: (_size(element-margin) * 0.75);
+		@include breakpoint('<=medium') {
+			.links {
+				> div {
+					width: 50%;
+
+					&:nth-child(4n - 3) {
+						border-left-width: 1px;
+					}
+
+					&:nth-child(-n + 4) {
+						border-top-width: 1px;
+					}
+
+					&:nth-child(2n - 1) {
+						border-left-width: 0;
+					}
+
+					&:nth-child(-n + 2) {
+						border-top-width: 0;
+					}
+				}
 			}
 
-			.copyright {
+			.contact-icons {
+				display: block;
+
 				li {
 					display: block;
-					border-left: 0;
-					margin-left: 0;
-					padding-left: 0;
+					margin: 1em 0 0 0;
+
+					&:first-child {
+						margin-top: 0;
+					}
 				}
 			}
 		}
 
-		@include breakpoint(xsmall) {
-			@include padding(3em, 2em);
+		@include breakpoint('<=xsmall') {
+			padding: 0 1.5em;
+
+			.links {
+				margin: 0 0 _size(element-margin) 0;
+
+				> div {
+					border-left: 0;
+					width: 100%;
+
+					&:nth-child(2n - 1) {
+						border-left-width: 1px;
+					}
+
+					&:nth-child(-n + 2) {
+						border-top-width: 1px;
+					}
+
+					&:first-child {
+						border-top-width: 0;
+						padding-top: 0;
+					}
+
+					&:last-child {
+						padding-bottom: 0;
+					}
+				}
+			}
 		}
 	}

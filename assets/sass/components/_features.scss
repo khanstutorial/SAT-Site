@@ -1,68 +1,69 @@
 ///
-/// Construct by Pixelarity
+/// Altitude by Pixelarity
 /// pixelarity.com | hello@pixelarity.com
 /// License: pixelarity.com/license
 ///
 
-/* Feature */
+/* Features */
 
 	.features {
 		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'row');
 		@include vendor('flex-wrap', 'wrap');
-		border-bottom: solid _size(border-width);
-		border-left: solid _size(border-width);
 		margin: 0 0 _size(element-margin) 0;
 
-		> section {
-			@include padding(4em, 4em);
-			border-right: solid _size(border-width);
-			border-top: solid _size(border-width);
-			width: 50%;
+		section {
+			@include vendor('flex-grow', '0');
+			@include vendor('flex-shrink', '0');
+			border-left: solid 1px;
+			border-top: solid 1px;
+			padding: 2em 3em;
+			text-align: center;
+			width: calc(100% / 3);
 
-			.icon {
-				margin-bottom: _size(element-margin);
+			&:nth-child(3n - 2) {
+				border-left-width: 0;
+			}
 
-				&:before {
-					font-size: 3em;
+			&:nth-child(-n + 3) {
+				border-top-width: 0;
+			}
+		}
+
+		@include breakpoint('<=medium') {
+			@include vendor('flex-direction', 'column');
+
+			section {
+				@include padding(3em, 3em);
+				border-left: 0;
+				width: 100%;
+
+				&:nth-child(-n + 3) {
+					border-top-width: 1px;
+				}
+
+				&:first-child {
+					border-top-width: 0;
+					padding-top: 1em;
+				}
+
+				&:last-child {
+					padding-bottom: 0;
 				}
 			}
-
-			h3 {
-				margin-bottom: (_size(element-margin) * 0.35);
-			}
 		}
 
-		@include breakpoint(medium) {
-			> section {
-				@include padding(2em, 2em);
-			}
-		}
-
-		@include breakpoint(small) {
-			margin: _size(element-margin) 0;
-		}
-
-		@include breakpoint(xsmall) {
-			> section {
-				width: 100%;
+		@include breakpoint('<=small') {
+			section {
+				@include padding(3em, 2em);
 			}
 		}
 	}
 
 	@mixin color-features($p: null) {
-		$highlight: _palette($p, highlight);
-
 		.features {
-			border-color: _palette($p, border);
-
-			> section {
+			section {
 				border-color: _palette($p, border);
-
-				.icon {
-					&:before {
-						color: _palette($highlight, bg);
-					}
-				}
 			}
 		}
 	}

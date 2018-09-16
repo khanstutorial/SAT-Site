@@ -1,5 +1,5 @@
 ///
-/// Construct by Pixelarity
+/// Altitude by Pixelarity
 /// pixelarity.com | hello@pixelarity.com
 /// License: pixelarity.com/license
 ///
@@ -56,5 +56,55 @@
 			img {
 				width: 100%;
 			}
+		}
+
+		@include breakpoint('<=small') {
+			&.main {
+				margin: 0 0 _size(element-margin) 0;
+			}
+		}
+	}
+
+	img {
+		display: block;
+
+		&[data-position] {
+			@include vendor('object-fit', 'cover');
+		}
+
+		&[data-position="top"] {
+			@include vendor('object-position', 'top');
+		}
+
+		&[data-position="top right"] {
+			@include vendor('object-position', 'top right');
+		}
+
+		&[data-position="right"] {
+			@include vendor('object-position', 'right');
+		}
+
+		&[data-position="bottom right"] {
+			@include vendor('object-position', 'bottom right');
+		}
+
+		&[data-position="bottom"] {
+			@include vendor('object-position', 'bottom');
+		}
+
+		&[data-position="bottom left"] {
+			@include vendor('object-position', 'bottom left');
+		}
+
+		&[data-position="left"] {
+			@include vendor('object-position', 'left');
+		}
+
+		&[data-position="top left"] {
+			@include vendor('object-position', 'top left');
+		}
+
+		&[data-position="center"] {
+			@include vendor('object-position', 'center');
 		}
 	}
