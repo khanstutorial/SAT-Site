@@ -13,7 +13,8 @@ img.resize {
 }
 
 #navButton{
-  position: absolute;
+  position: relative;
+  top: 2em;
   bottom: 2em;
   color: #4A74C9 !important;
 }
