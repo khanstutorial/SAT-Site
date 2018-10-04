@@ -5,16 +5,13 @@ def writeTo(fileName,fileContent):
         outfile.write(fileContent)
     return
 
-def readFrom(fileName):
-    return
-
 # input ex. : "Astoria", "Floral-Park"
 # output: index.html with replaced titleString
 def makeFile(nbrhood):
     titleString = "<title>SAT - Khan's Tutorial</title>"
     bannerString = "<a href=\"index.html\" class=\"logo\">SAT <span>Khan's Tutorial</span></a>"
     endContent = None
-    with open("../SAT-Site/index.html","r",encoding='ascii',errors='surrogateescape') as reference:
+    with open("./index.html","r",encoding='ascii',errors='surrogateescape') as reference:
         refContent = reference.read()
         newTString = titleString.replace("SAT",nbrhood+" SAT")
         newBString = bannerString.replace("SAT",nbrhood+" SAT")
@@ -23,10 +20,24 @@ def makeFile(nbrhood):
         endContent = refContent[:tIndex]+newTString+refContent[tIndex+len(titleString):bIndex]+newBString+refContent[bIndex+len(bannerString):]
     return endContent
 
-def generate(nbrhood):
+def makeHallofFame(nbrhood):
+    bannerString = "<a href=\"../index.html\" class=\"logo\">SAT <span>Khan's Tutorial</span></a>"
+    indexLink = "<a href=\"../index.html\">"
+    hallLink = "<a href=\"halloffame.html\">"
+    mentorLink = "<a href=\"mentorship.html\">"
+    progLink = "<a href=\"programs.html\">"
+    faqLink = "<a href=\"satfaqs.html\">"
+
+def generateIndex(nbrhood):
     fileName = nbrhood+".html"
     name = nbrhood.replace('-',' ')
     writeTo(fileName,makeFile(name))
+    return
+
+def generateHall(nbrhood):
+    fileName = "./nbrhoodHoF/halloffame_"+nbrhood+".html"
+    name = nbrhood.replace('-',' ')
+    writeTo(fileName,makeHallofFame(name))
     return
 
 # generates html pages for all neighborhoods on file
@@ -46,7 +57,7 @@ def cityGeneration():
                      "Sunset-Park","Unionport","Upper-East-Side","Utopia","Van-Nest","West-Farms","Westchester-Square",
                      "Whitestone","Windsor-Terrace","Woodhaven","Woodside"]
     for x in neighborhoods:
-        generate(x)
+        generateIndex(x)
     return
 
 cityGeneration()
