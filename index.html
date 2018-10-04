@@ -34,7 +34,7 @@
 									<a href="index.html" class="logo">SAT <span>Khan's Tutorial</span></a>
 									<nav>
 										<ul>
-											<li><a href="#menu">Menu</a></li>
+											<li id="menuLink"><a href="#menu">Menu</a></li>
 										</ul>
 									</nav>
 								</header>
@@ -43,10 +43,10 @@
 								<nav id="menu">
 									<ul class="links">
 										<li><a href="index.html">Home</a></li>
-										<li><a href="halloffame.html">Hall Of Fame</a></li>
-										<li><a href="mentorship.html">Mentorship</a></li>
-										<li><a href="programs.html">Programs</a></li>
-										<li><a href="satfaqs.html">SAT FAQ</a></li>
+										<li><a href="templates/halloffame.html">Hall Of Fame</a></li>
+										<li><a href="templates/mentorship.html">Mentorship</a></li>
+										<li><a href="templates/programs.html">Programs</a></li>
+										<li><a href="templates/satfaqs.html">SAT FAQ</a></li>
 									</ul>
 										<section class="main accent1">
 											<div id="navButton">
@@ -63,14 +63,14 @@
 											<h1><font color="#29406e">Hall Of Fame</font></h1>
 											<p>The Hall of Fame of the our top students that scored the best on their SAT's.</p>
 											<ul class="actions special">
-												<li><a href="halloffame.html" class="button primary">Learn More</a></li>
+												<li><a href="templates/halloffame.html" class="button primary">Learn More</a></li>
 											</ul>
 										</section>
 										<section class="accent2">
 											<h1><font color="#29406e">Mentorship</font></h1>
 											<p>Our Mentorship Program will teach our students on how to face the College Admissions process.</p>
 											<ul class="actions special">
-												<li><a href="mentorship.html" class="button primary">Learn More</a></li>
+												<li><a href="templates/mentorship.html" class="button primary">Learn More</a></li>
 											</ul>
 										</section>
 									</div>
@@ -517,28 +517,5 @@
 					});
     		});
   		</script>
-			<script type='text/javascript' data-cfasync='false'>
-					window.purechatApi = { l: [],
-																 t: [],
-																 on: function () { this.l.push(arguments); }
-															 };
-					(
-						function () {
-							var done = false;
-							var script = document.createElement('script');
-							script.async = true;
-							script.type = 'text/javascript';
-							script.src = 'https://app.purechat.com/VisitorWidget/WidgetScript';
-							document.getElementsByTagName('HEAD').item(0).appendChild(script);
-							script.onreadystatechange = script.onload = function (e) {
-																														if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
-																															var w = new PCWidget({c: 'e85780de-0b6b-4265-bc3f-6d6a615916d6', f: true });
-																															done = true;
-																														}
-																													};
-						}
-					)();</script>
-
-
 	</body>
 </html>
