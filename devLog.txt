@@ -1,0 +1,6 @@
+18.10.07
+  (index.html, templates/halloffame.html, templates/mentorship.html, templates/programs.html, templates/satfaqs.html)
+  The way the template pages are stored make it impossible for them to link properly
+  This can be solved:
+    - If the template pages are never referenced, only used as templates
+    - If the links in the template pages are fixed, and the corresponding lookup substrings in replicator2000.py are fixed

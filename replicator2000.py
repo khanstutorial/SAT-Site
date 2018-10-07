@@ -1,43 +1,287 @@
 #! python3
+import re
 
 def writeTo(fileName,fileContent):
     with open(fileName,"w+") as outfile:
         outfile.write(fileContent)
     return
 
+def findAll(lookup,refContent,tag):
+    startIndices = [m.start() for m in re.finditer(lookup, refContent)]
+    indexPairs = []
+    lookLength = len(lookup)
+    for elem in startIndices:
+        indexPairs.append((elem,elem+lookLength,tag))
+    return indexPairs
+
+def orderIndices(arr,arrLen):
+    key = None
+    for i in range(1,arrLen):
+        key = arr[i]
+        j = i-1
+        while(j >= 0 and arr[j]>key):
+            arr[j+1] = arr[j]
+            j -= 1
+        arr[j+1] = key
+
 # input ex. : "Astoria", "Floral-Park"
 # output: index.html with replaced titleString
 def makeFile(nbrhood):
-    titleString = "<title>SAT - Khan's Tutorial</title>"
-    bannerString = "<a href=\"index.html\" class=\"logo\">SAT <span>Khan's Tutorial</span></a>"
-    endContent = None
+    # bannerString and first indexLink are too close so characters in between must be paid special attention
+    bannerString = "\" class=\"logo\">SAT <span>"
+    indexLink = "index.html"
+    hallLink = "templates/halloffame.html"
+    mentorLink = "templates/mentorship.html"
+    progLink = "templates/programs.html"
+    faqLink = "templates/satfaqs.html"
+    newBString = bannerString.replace("SAT",nbrhood.replace('-',' ')+" SAT")
+    newIString = "./"+nbrhood+".html"
+    newHString = "./nbrhoodHoF/halloffame_"+nbrhood+".html"
+    newMString = "./nbrhoodMtrshp/mentorship_"+nbrhood+".html"
+    newPString = "./nbrhoodProgs/programs_"+nbrhood+".html"
+    newFString = "./nbrhoodFaqs/satfaqs_"+nbrhood+".html"
+
+    insertDict = {
+        'b' : newBString,
+        'i' : newIString,
+        'h' : newHString,
+        'm' : newMString,
+        'p' : newPString,
+        'f' : newFString
+    }
     with open("./index.html","r",encoding='ascii',errors='surrogateescape') as reference:
         refContent = reference.read()
-        newTString = titleString.replace("SAT",nbrhood+" SAT")
-        newBString = bannerString.replace("SAT",nbrhood+" SAT")
-        tIndex = refContent.find(titleString)
-        bIndex = refContent.find(bannerString)
-        endContent = refContent[:tIndex]+newTString+refContent[tIndex+len(titleString):bIndex]+newBString+refContent[bIndex+len(bannerString):]
+        bIndices = findAll(bannerString,refContent,'b')
+        iIndices = findAll(indexLink,refContent,'i')
+        hIndices = findAll(hallLink,refContent,'h')
+        mIndices = findAll(mentorLink,refContent,'m')
+        pIndices = findAll(progLink,refContent,'p')
+        fIndices = findAll(faqLink,refContent,'f')
+        allIndices = bIndices+iIndices+hIndices+mIndices+pIndices+fIndices
+        allLength = len(allIndices)
+        orderIndices(allIndices,allLength)
+        endContent = ""
+        for i in range(allLength):
+            insertStr = insertDict[allIndices[i][2]]
+            if(i==0):
+                endContent += refContent[:allIndices[i][0]]+insertStr
+            elif(i==allLength-1):
+                endContent += insertStr+refContent[allIndices[i][1]:]
+                break
+            else:
+                endContent += insertStr+refContent[allIndices[i][1]:allIndices[i+1][0]]
+        return endContent
     return endContent
 
+# Subpage generators : can compress into one function, then pass a dictionary/array of corresponding strings
+
 def makeHallofFame(nbrhood):
-    bannerString = "<a href=\"../index.html\" class=\"logo\">SAT <span>Khan's Tutorial</span></a>"
-    indexLink = "<a href=\"../index.html\">"
-    hallLink = "<a href=\"halloffame.html\">"
-    mentorLink = "<a href=\"mentorship.html\">"
-    progLink = "<a href=\"programs.html\">"
-    faqLink = "<a href=\"satfaqs.html\">"
+    # bannerString and first indexLink are too close so characters in between must be paid special attention
+    bannerString = "\" class=\"logo\">SAT <span>"
+    indexLink = "../index.html"
+    hallLink = "halloffame.html"
+    mentorLink = "mentorship.html"
+    progLink = "programs.html"
+    faqLink = "satfaqs.html"
+    newBString = bannerString.replace("SAT",nbrhood.replace('-',' ')+" SAT")
+    newIString = "../"+nbrhood+".html"
+    newHString = "./halloffame_"+nbrhood+".html"
+    newMString = "../nbrhoodMtrshp/mentorship_"+nbrhood+".html"
+    newPString = "../nbrhoodProgs/programs_"+nbrhood+".html"
+    newFString = "../nbrhoodFaqs/satfaqs_"+nbrhood+".html"
+
+    insertDict = {
+        'b' : newBString,
+        'i' : newIString,
+        'h' : newHString,
+        'm' : newMString,
+        'p' : newPString,
+        'f' : newFString
+    }
+    with open("./templates/halloffame.html","r",encoding='ascii',errors='surrogateescape') as reference:
+        refContent = reference.read()
+        bIndices = findAll(bannerString,refContent,'b')
+        iIndices = findAll(indexLink,refContent,'i')
+        hIndices = findAll(hallLink,refContent,'h')
+        mIndices = findAll(mentorLink,refContent,'m')
+        pIndices = findAll(progLink,refContent,'p')
+        fIndices = findAll(faqLink,refContent,'f')
+        allIndices = bIndices+iIndices+hIndices+mIndices+pIndices+fIndices
+        allLength = len(allIndices)
+        orderIndices(allIndices,allLength)
+        endContent = ""
+        for i in range(allLength):
+            insertStr = insertDict[allIndices[i][2]]
+            if(i==0):
+                endContent += refContent[:allIndices[i][0]]+insertStr
+            elif(i==allLength-1):
+                endContent += insertStr+refContent[allIndices[i][1]:]
+                break
+            else:
+                endContent += insertStr+refContent[allIndices[i][1]:allIndices[i+1][0]]
+        return endContent
+
+def makeMentorship(nbrhood):
+    # bannerString and first indexLink are too close so characters in between must be paid special attention
+    bannerString = "\" class=\"logo\">SAT <span>"
+    indexLink = "../index.html"
+    hallLink = "halloffame.html"
+    mentorLink = "mentorship.html"
+    progLink = "programs.html"
+    faqLink = "satfaqs.html"
+    newBString = bannerString.replace("SAT",nbrhood.replace('-',' ')+" SAT")
+    newIString = "../"+nbrhood+".html"
+    newHString = "../nbrhoodHoF/halloffame_"+nbrhood+".html"
+    newMString = "./mentorship_"+nbrhood+".html"
+    newPString = "../nbrhoodProgs/programs_"+nbrhood+".html"
+    newFString = "../nbrhoodFaqs/satfaqs_"+nbrhood+".html"
+
+    insertDict = {
+        'b' : newBString,
+        'i' : newIString,
+        'h' : newHString,
+        'm' : newMString,
+        'p' : newPString,
+        'f' : newFString
+    }
+    with open("./templates/mentorship.html","r",encoding='ascii',errors='surrogateescape') as reference:
+        refContent = reference.read()
+        bIndices = findAll(bannerString,refContent,'b')
+        iIndices = findAll(indexLink,refContent,'i')
+        hIndices = findAll(hallLink,refContent,'h')
+        mIndices = findAll(mentorLink,refContent,'m')
+        pIndices = findAll(progLink,refContent,'p')
+        fIndices = findAll(faqLink,refContent,'f')
+        allIndices = bIndices+iIndices+hIndices+mIndices+pIndices+fIndices
+        allLength = len(allIndices)
+        orderIndices(allIndices,allLength)
+        endContent = ""
+        for i in range(allLength):
+            insertStr = insertDict[allIndices[i][2]]
+            if(i==0):
+                endContent += refContent[:allIndices[i][0]]+insertStr
+            elif(i==allLength-1):
+                endContent += insertStr+refContent[allIndices[i][1]:]
+                break
+            else:
+                endContent += insertStr+refContent[allIndices[i][1]:allIndices[i+1][0]]
+        return endContent
+
+def makePrograms(nbrhood):
+    # bannerString and first indexLink are too close so characters in between must be paid special attention
+    bannerString = "\" class=\"logo\">SAT <span>"
+    indexLink = "../index.html"
+    hallLink = "halloffame.html"
+    mentorLink = "mentorship.html"
+    progLink = "programs.html"
+    faqLink = "satfaqs.html"
+    newBString = bannerString.replace("SAT",nbrhood.replace('-',' ')+" SAT")
+    newIString = "../"+nbrhood+".html"
+    newHString = "../nbrhoodHoF/halloffame_"+nbrhood+".html"
+    newMString = "../nbrhoodMtrshp/mentorship_"+nbrhood+".html"
+    newPString = "./programs_"+nbrhood+".html"
+    newFString = "../nbrhoodFaqs/satfaqs_"+nbrhood+".html"
+
+    insertDict = {
+        'b' : newBString,
+        'i' : newIString,
+        'h' : newHString,
+        'm' : newMString,
+        'p' : newPString,
+        'f' : newFString
+    }
+    with open("./templates/programs.html","r",encoding='ascii',errors='surrogateescape') as reference:
+        refContent = reference.read()
+        bIndices = findAll(bannerString,refContent,'b')
+        iIndices = findAll(indexLink,refContent,'i')
+        hIndices = findAll(hallLink,refContent,'h')
+        mIndices = findAll(mentorLink,refContent,'m')
+        pIndices = findAll(progLink,refContent,'p')
+        fIndices = findAll(faqLink,refContent,'f')
+        allIndices = bIndices+iIndices+hIndices+mIndices+pIndices+fIndices
+        allLength = len(allIndices)
+        orderIndices(allIndices,allLength)
+        endContent = ""
+        for i in range(allLength):
+            insertStr = insertDict[allIndices[i][2]]
+            if(i==0):
+                endContent += refContent[:allIndices[i][0]]+insertStr
+            elif(i==allLength-1):
+                endContent += insertStr+refContent[allIndices[i][1]:]
+                break
+            else:
+                endContent += insertStr+refContent[allIndices[i][1]:allIndices[i+1][0]]
+        return endContent
+
+def makeSatFaqs(nbrhood):
+    # bannerString and first indexLink are too close so characters in between must be paid special attention
+    bannerString = "\" class=\"logo\">SAT <span>"
+    indexLink = "../index.html"
+    hallLink = "halloffame.html"
+    mentorLink = "mentorship.html"
+    progLink = "programs.html"
+    faqLink = "satfaqs.html"
+    newBString = bannerString.replace("SAT",nbrhood.replace('-',' ')+" SAT")
+    newIString = "../"+nbrhood+".html"
+    newHString = "../nbrhoodHoF/halloffame_"+nbrhood+".html"
+    newMString = "../nbrhoodMtrshp/mentorship_"+nbrhood+".html"
+    newPString = "../nbrhoodProgs/programs_"+nbrhood+".html"
+    newFString = "./satfaqs_"+nbrhood+".html"
+
+    insertDict = {
+        'b' : newBString,
+        'i' : newIString,
+        'h' : newHString,
+        'm' : newMString,
+        'p' : newPString,
+        'f' : newFString
+    }
+    with open("./templates/satfaqs.html","r",encoding='ascii',errors='surrogateescape') as reference:
+        refContent = reference.read()
+        bIndices = findAll(bannerString,refContent,'b')
+        iIndices = findAll(indexLink,refContent,'i')
+        hIndices = findAll(hallLink,refContent,'h')
+        mIndices = findAll(mentorLink,refContent,'m')
+        pIndices = findAll(progLink,refContent,'p')
+        fIndices = findAll(faqLink,refContent,'f')
+        allIndices = bIndices+iIndices+hIndices+mIndices+pIndices+fIndices
+        allLength = len(allIndices)
+        orderIndices(allIndices,allLength)
+        endContent = ""
+        for i in range(allLength):
+            insertStr = insertDict[allIndices[i][2]]
+            if(i==0):
+                endContent += refContent[:allIndices[i][0]]+insertStr
+            elif(i==allLength-1):
+                endContent += insertStr+refContent[allIndices[i][1]:]
+                break
+            else:
+                endContent += insertStr+refContent[allIndices[i][1]:allIndices[i+1][0]]
+        return endContent
 
 def generateIndex(nbrhood):
     fileName = nbrhood+".html"
-    name = nbrhood.replace('-',' ')
-    writeTo(fileName,makeFile(name))
+    writeTo(fileName,makeFile(nbrhood))
     return
 
 def generateHall(nbrhood):
     fileName = "./nbrhoodHoF/halloffame_"+nbrhood+".html"
-    name = nbrhood.replace('-',' ')
-    writeTo(fileName,makeHallofFame(name))
+    writeTo(fileName,makeHallofFame(nbrhood))
+    return
+
+def generateMentor(nbrhood):
+    fileName = "./nbrhoodMtrshp/mentorship_"+nbrhood+".html"
+    writeTo(fileName,makeMentorship(nbrhood))
+    return
+
+def generateProgs(nbrhood):
+    fileName = "./nbrhoodProgs/programs_"+nbrhood+".html"
+    writeTo(fileName,makePrograms(nbrhood))
+    return
+
+def generateFaqs(nbrhood):
+    fileName = "./nbrhoodFaqs/satfaqs_"+nbrhood+".html"
+    writeTo(fileName,makeSatFaqs(nbrhood))
     return
 
 # generates html pages for all neighborhoods on file
@@ -58,6 +302,18 @@ def cityGeneration():
                      "Whitestone","Windsor-Terrace","Woodhaven","Woodside"]
     for x in neighborhoods:
         generateIndex(x)
+        generateHall(x)
+        generateMentor(x)
+        generateFaqs(x)
+        generateProgs(x)
+    return
+
+def test():
+    generateIndex("Floral-Park")
+    generateHall("Floral-Park")
+    generateMentor("Floral-Park")
+    generateFaqs("Floral-Park")
+    generateProgs("Floral-Park")
     return
 
 cityGeneration()
