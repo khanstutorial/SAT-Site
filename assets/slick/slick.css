@@ -87,11 +87,17 @@
 .slick-slide img
 {
   opacity: 0.3;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
 }
 
 .slick-current img
 {
   opacity: 1 !important;
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
 }
 [dir='rtl'] .slick-slide
 {
