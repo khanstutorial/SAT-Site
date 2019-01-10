@@ -309,11 +309,12 @@ def cityGeneration():
     return
 
 def test():
-    generateIndex("Floral-Park")
-    generateHall("Floral-Park")
-    generateMentor("Floral-Park")
-    generateFaqs("Floral-Park")
-    generateProgs("Floral-Park")
+    generateIndex("Rosedale")
+    generateHall("Rosedale")
+    generateMentor("Rosedale")
+    generateFaqs("Rosedale")
+    generateProgs("Rosedale")
     return
 
+#test()
 cityGeneration()
