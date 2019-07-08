@@ -7,6 +7,15 @@
 	License: pixelarity.com/license
 */
 
+    .navbar {
+      overflow: hidden;
+      background-color: #53585e;
+      position: fixed;
+      z-index: 4;
+      top: 0;
+      width: 100%;
+      }
+
 /* CAROUSAL IMAGE RESIZE CLASS */
 img.resize {
   max-width:70%;
